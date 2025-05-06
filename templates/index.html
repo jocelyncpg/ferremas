@@ -23,6 +23,8 @@
           <p class="card-text fw-bold">${{ product.price }}</p>
           <p class="card-text">{{ product.description }}</p>
           <a href="{{ url_for('product_detail', product_name=product.name) }}" class="btn btn-danger">Ver más</a>
+          <a href="{{ url_for('add_to_cart', product_name=product.name) }}" class="btn btn-danger">Agregar al carrito</a>
+
         </div>
       </div>
     </div>

@@ -1,7 +1,33 @@
 {% extends 'layout.html' %}
 {% block content %}
+
 <div class="container my-5">
-  <h2>Mi Carrito</h2>
-  <p>Tu carrito está vacío por ahora.</p>
+  <h2 class="text-center mb-4">Carrito de Compras</h2>
+
+  {% if cart and cart|length > 0 %}
+    <div class="row">
+      {% for item in cart %}
+        <div class="col-md-4 mb-4">
+          <div class="card h-100 shadow-sm">
+            <img src="{{ url_for('static', filename='css/img/' + item.image) }}" class="card-img-top" alt="{{ item.name }}" style="height: 200px; object-fit: contain;">
+            <div class="card-body">
+              <h5 class="card-title">{{ item.name }}</h5>
+              <p class="card-text fw-bold">${{ item.price }}</p>
+              <p class="card-text">{{ item.description }}</p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="text-center">
+      <a href="{{ url_for('index') }}" class="btn btn-success mt-3">Seguir comprando</a>
+    </div>
+  {% else %}
+    <p class="text-center">Tu carrito está vacío.</p>
+    <div class="text-center">
+      <a href="{{ url_for('index') }}" class="btn btn-primary">Volver a la tienda</a>
+    </div>
+  {% endif %}
 </div>
+
 {% endblock %}

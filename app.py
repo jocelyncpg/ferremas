@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 
 app = Flask(__name__)
+app.secret_key = 'clave_secreta_para_sesiones'
 
 # Página de inicio
 @app.route('/', methods=['GET'])
@@ -22,7 +23,6 @@ def index():
     no_results_message = "No se encontraron productos que coincidan con tu búsqueda." if search_query and not products else None
 
     return render_template('index.html', products=products, no_results_message=no_results_message)
-
 
 # Página de detalles del producto
 @app.route('/product/<product_name>')
@@ -55,11 +55,29 @@ def login():
 # Página del carrito
 @app.route('/cart')
 def cart():
-    return render_template('cart.html')
+    cart_items = session.get('cart', [])
+    return render_template('cart.html', cart=cart_items)
 
-# Ruta ficticia para agregar al carrito (opcional)
+# Ruta para agregar productos al carrito
 @app.route('/add_to_cart/<product_name>')
 def add_to_cart(product_name):
+    products = [
+        {"name": "Taladro Percutor Bosch", "image": "taladro.jpg", "price": 89090.99, "description": "Taladro percutor de alta potencia Bosch."},
+        {"name": "Cemento Portland", "image": "cemento.jpg", "price": 1499.99, "description": "Cemento Portland para construcción."},
+        {"name": "Casco de Seguridad", "image": "casco.jpg", "price": 2499.99, "description": "Casco resistente para seguridad industrial."},
+        {"name": "Sierra", "image": "sierra.jpg", "price": 45000.00, "description": "Sierra de alta calidad, ideal para cortar madera y otros materiales."},
+        {"name": "Martillo", "image": "martillo.jpg", "price": 20000.00, "description": "Martillo robusto, ideal para trabajos de construcción y reparaciones."},
+        {"name": "Guantes de Seguridad", "image": "guante.jpg", "price": 8000.00, "description": "Guantes resistentes, ideales para trabajos de protección en construcción."}
+    ]
+
+    selected_product = next((p for p in products if p["name"] == product_name), None)
+
+    if selected_product:
+        if 'cart' not in session:
+            session['cart'] = []
+        session['cart'].append(selected_product)
+        session.modified = True
+
     return redirect(url_for('cart'))
 
 if __name__ == "__main__":
