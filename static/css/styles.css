@@ -1,6 +1,6 @@
 /* Variables de color */
 :root {
-    --color-primary: #f21818; /* Rojo */
+    --color-primary: #333333; /* Rojo */
     --color-secondary: #ffffff; /* Blanco */
     --color-accent: #333333; /* Gris oscuro */
     --color-light: #f4f4f4; /* Gris claro */
@@ -8,12 +8,14 @@
 
 /* Estilos generales */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     margin: 0;
     padding: 0;
     background-color: var(--color-light);
     color: var(--color-accent);
 }
+
+
 
 /* Encabezado */
 header {
@@ -44,7 +46,7 @@ nav ul li {
 }
 
 nav ul li a {
-    color: var(--color-primary);
+    color: white;
     text-decoration: none;
     font-size: 1.1rem;
 }
@@ -136,14 +138,15 @@ nav ul li a {
 }
 
 /* Pie de página */
+
 footer {
-    background-color: var(--color-primary);
+    background-color: #333333;
     color: var(--color-secondary);
     text-align: center;
     padding: 20px 0;
-    position: relative;
-    bottom: 0;
-    width: 100%;
+    width: 100vw; /* Asegura que use el 100% del ancho visible */
+    margin-top: 40px; /* Agrega un poco de espacio respecto al contenido */
+    box-sizing: border-box; /* Asegura que padding no afecte el ancho */
 }
 
 footer p {
